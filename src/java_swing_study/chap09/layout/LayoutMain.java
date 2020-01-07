@@ -17,7 +17,8 @@ public class LayoutMain extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JButton btnFlowLayout;
 	private JButton btnBorderLayout;
-	private JButton btnGridLayout;
+	private JButton btnGridLayoutEx;
+	private JButton btnGridLayout2;
 
 	/**
 	 * Launch the application.
@@ -58,13 +59,20 @@ public class LayoutMain extends JFrame implements ActionListener {
 		btnBorderLayout.addActionListener(this);
 		contentPane.add(btnBorderLayout);
 		
-		btnGridLayout = new JButton("GridLayout");
-		btnGridLayout.addActionListener(this);
-		contentPane.add(btnGridLayout);
+		btnGridLayoutEx = new JButton("GridLayoutEx");
+		btnGridLayoutEx.addActionListener(this);
+		contentPane.add(btnGridLayoutEx);
+		
+		btnGridLayout2 = new JButton("GridLayout2");
+		btnGridLayout2.addActionListener(this);
+		contentPane.add(btnGridLayout2);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == btnGridLayout) {
+		if (e.getSource() == btnGridLayout2) {
+			btnGridLayout2ActionPerformed(e);
+		}
+		if (e.getSource() == btnGridLayoutEx) {
 			btnGridLayoutActionPerformed(e);
 		}
 		if (e.getSource() == btnBorderLayout) {
@@ -84,6 +92,10 @@ public class LayoutMain extends JFrame implements ActionListener {
 	}
 	protected void btnGridLayoutActionPerformed(ActionEvent e) {
 		GridLayoutEx frame = new GridLayoutEx();
+		frame.setVisible(true);
+	}
+	protected void btnGridLayout2ActionPerformed(ActionEvent e) {
+		GridLayoutEx02 frame = new GridLayoutEx02();
 		frame.setVisible(true);
 	}
 }
