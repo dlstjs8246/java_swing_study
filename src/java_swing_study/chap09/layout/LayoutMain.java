@@ -19,6 +19,7 @@ public class LayoutMain extends JFrame implements ActionListener {
 	private JButton btnBorderLayout;
 	private JButton btnGridLayoutEx;
 	private JButton btnGridLayout2;
+	private JButton btnAbsoluteLayout;
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class LayoutMain extends JFrame implements ActionListener {
 		contentPane = new JPanel();
 		contentPane.setBorder(new TitledBorder(null, "레이아웃 예제", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		setContentPane(contentPane);
-		contentPane.setLayout(new GridLayout(1, 0, 0, 0));
+		contentPane.setLayout(new GridLayout(0, 2, 10, 10));
 		
 		btnFlowLayout = new JButton("flowLayout");
 		btnFlowLayout.addActionListener(this);
@@ -66,9 +67,16 @@ public class LayoutMain extends JFrame implements ActionListener {
 		btnGridLayout2 = new JButton("GridLayout2");
 		btnGridLayout2.addActionListener(this);
 		contentPane.add(btnGridLayout2);
+		
+		btnAbsoluteLayout = new JButton("absoluteLayout");
+		btnAbsoluteLayout.addActionListener(this);
+		contentPane.add(btnAbsoluteLayout);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAbsoluteLayout) {
+			btnAbsoluteLayoutActionPerformed(e);
+		}
 		if (e.getSource() == btnGridLayout2) {
 			btnGridLayout2ActionPerformed(e);
 		}
@@ -96,6 +104,10 @@ public class LayoutMain extends JFrame implements ActionListener {
 	}
 	protected void btnGridLayout2ActionPerformed(ActionEvent e) {
 		GridLayoutEx02 frame = new GridLayoutEx02();
+		frame.setVisible(true);
+	}
+	protected void btnAbsoluteLayoutActionPerformed(ActionEvent e) {
+		AbsoluteLayoutEx frame = new AbsoluteLayoutEx();
 		frame.setVisible(true);
 	}
 }

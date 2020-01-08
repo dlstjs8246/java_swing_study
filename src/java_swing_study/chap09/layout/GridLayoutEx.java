@@ -1,12 +1,11 @@
 package java_swing_study.chap09.layout;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class GridLayoutEx extends JFrame {
