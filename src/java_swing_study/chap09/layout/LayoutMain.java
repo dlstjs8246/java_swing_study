@@ -14,6 +14,9 @@ import javax.swing.border.TitledBorder;
 
 import java_swing_study.chap09.layout.exam.Exam02;
 import java_swing_study.chap09.layout.exam.Exam04;
+import java_swing_study.chap09.layout.exam.Exam05;
+import java_swing_study.chap09.layout.exam.Exam07;
+import java_swing_study.chap09.layout.exam.Exam08;
 
 @SuppressWarnings("serial")
 public class LayoutMain extends JFrame implements ActionListener {
@@ -101,16 +104,28 @@ public class LayoutMain extends JFrame implements ActionListener {
 		pRight.add(btnExam04);
 		
 		btnExam05 = new JButton("exam05");
+		btnExam05.addActionListener(this);
 		pRight.add(btnExam05);
 		
 		btnExam07 = new JButton("exam07");
+		btnExam07.addActionListener(this);
 		pRight.add(btnExam07);
 		
 		btnExam08 = new JButton("exam08");
+		btnExam08.addActionListener(this);
 		pRight.add(btnExam08);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnExam08) {
+			btnExam08ActionPerformed(e);
+		}
+		if (e.getSource() == btnExam07) {
+			btnExam07ActionPerformed(e);
+		}
+		if (e.getSource() == btnExam05) {
+			btnExam05ActionPerformed(e);
+		}
 		if (e.getSource() == btnExam04) {
 			btnExam04ActionPerformed(e);
 		}
@@ -124,6 +139,18 @@ public class LayoutMain extends JFrame implements ActionListener {
 	}
 	protected void btnExam04ActionPerformed(ActionEvent e) {
 		Exam04 exam = new Exam04();
+		exam.setVisible(true);
+	}
+	protected void btnExam05ActionPerformed(ActionEvent e) {
+		Exam05 exam = new Exam05();
+		exam.setVisible(true);
+	}
+	protected void btnExam07ActionPerformed(ActionEvent e) {
+		Exam07 exam = new Exam07();
+		exam.setVisible(true);
+	}
+	protected void btnExam08ActionPerformed(ActionEvent e) {
+		Exam08 exam = new Exam08();
 		exam.setVisible(true);
 	}
 }
