@@ -15,7 +15,7 @@ public class MyAction2Listener implements ActionListener {
 			btn = (JButton)e.getSource();
 		}
 		
-		JOptionPane.showMessageDialog(null, btn.getText());
+		JOptionPane.showMessageDialog(null, btn.getActionCommand());
 	}
 
 }
