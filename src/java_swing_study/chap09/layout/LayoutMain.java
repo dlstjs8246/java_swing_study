@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,6 +19,7 @@ import java_swing_study.chap09.layout.exam.Exam04;
 import java_swing_study.chap09.layout.exam.Exam05;
 import java_swing_study.chap09.layout.exam.Exam07;
 import java_swing_study.chap09.layout.exam.Exam08;
+import java_swing_study.chap09.layout.openchallenge.OpenChallengeEx;
 
 @SuppressWarnings("serial")
 public class LayoutMain extends JFrame implements ActionListener {
@@ -73,21 +76,27 @@ public class LayoutMain extends JFrame implements ActionListener {
 		pLeft.setLayout(new GridLayout(0, 2, 10, 10));
 		
 		btnFlow = new JButton("flowLayout");
+		btnFlow.addActionListener(this);
 		pLeft.add(btnFlow);
 		
 		btnBorder = new JButton("BorderLayout");
+		btnBorder.addActionListener(this);
 		pLeft.add(btnBorder);
 		
 		btnGrid = new JButton("GridLayoutEx");
+		btnGrid.addActionListener(this);
 		pLeft.add(btnGrid);
 		
 		btnGrid2 = new JButton("GridLayout2");
+		btnGrid2.addActionListener(this);
 		pLeft.add(btnGrid2);
 		
 		btnAbsolute = new JButton("absoluteLayout");
+		btnAbsolute.addActionListener(this);
 		pLeft.add(btnAbsolute);
 		
 		BtnOpenChallenge = new JButton("openChallenge");
+		BtnOpenChallenge.addActionListener(this);
 		pLeft.add(BtnOpenChallenge);
 		
 		pRight = new JPanel();
@@ -113,10 +122,36 @@ public class LayoutMain extends JFrame implements ActionListener {
 		
 		btnExam08 = new JButton("exam08");
 		btnExam08.addActionListener(this);
+		btnExam08.addMouseListener(new MouseAdapter() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(e.getButton() + ":" + e.getClickCount());
+			}
+			
+		});
 		pRight.add(btnExam08);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == BtnOpenChallenge) {
+			BtnOpenChallengeActionPerformed(e);
+		}
+		if (e.getSource() == btnAbsolute) {
+			btnAbsoluteActionPerformed(e);
+		}
+		if (e.getSource() == btnGrid2) {
+			btnGrid2ActionPerformed(e);
+		}
+		if (e.getSource() == btnGrid) {
+			btnGridActionPerformed(e);
+		}
+		if (e.getSource() == btnBorder) {
+			btnBorderActionPerformed(e);
+		}
+		if (e.getSource() == btnFlow) {
+			btnFlowActionPerformed(e);
+		}
 		if (e.getSource() == btnExam08) {
 			btnExam08ActionPerformed(e);
 		}
@@ -152,5 +187,29 @@ public class LayoutMain extends JFrame implements ActionListener {
 	protected void btnExam08ActionPerformed(ActionEvent e) {
 		Exam08 exam = new Exam08();
 		exam.setVisible(true);
+	}
+	protected void btnFlowActionPerformed(ActionEvent e) {
+		FlowLayoutEx frame = new FlowLayoutEx();
+		frame.setVisible(true);	
+	}
+	protected void btnBorderActionPerformed(ActionEvent e) {
+		BorderLayoutEx frame = new BorderLayoutEx();
+		frame.setVisible(true);
+	}
+	protected void btnGridActionPerformed(ActionEvent e) {
+		GridLayoutEx frame = new GridLayoutEx();
+		frame.setVisible(true);
+	}
+	protected void btnGrid2ActionPerformed(ActionEvent e) {
+		GridLayoutEx02 frame = new GridLayoutEx02();
+		frame.setVisible(true);
+	}
+	protected void btnAbsoluteActionPerformed(ActionEvent e) {
+		AbsoluteLayoutEx frame = new AbsoluteLayoutEx();
+		frame.setVisible(true);
+	}
+	protected void BtnOpenChallengeActionPerformed(ActionEvent e) {
+		OpenChallengeEx frame = new OpenChallengeEx();
+		frame.setVisible(true);
 	}
 }

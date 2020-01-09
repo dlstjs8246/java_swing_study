@@ -32,7 +32,6 @@ public class Exam08 extends JFrame {
 		
 		panelCenter = new PanelCenterExam08();
 		for(JLabel j : panelCenter.getLabel()) {
-			System.out.println(j.getBounds());
 			panelCenter.add(j);
 		}
 		contentPane.add(panelCenter, BorderLayout.CENTER);
