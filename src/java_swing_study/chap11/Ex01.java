@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class Ex01 extends JFrame implements ActionListener, ContainerListener {
 
 	private JPanel contentPane;
