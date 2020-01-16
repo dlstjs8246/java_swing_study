@@ -80,6 +80,10 @@ public class Student implements Comparable<Student> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + eng;
+		result = prime * result + kor;
+		result = prime * result + math;
+		result = prime * result + ((stdName == null) ? 0 : stdName.hashCode());
 		result = prime * result + stdNo;
 		return result;
 	}
@@ -87,6 +91,9 @@ public class Student implements Comparable<Student> {
 	@Override
 	public boolean equals(Object obj) {
 		Student other = (Student) obj;
+		if(other==null) {
+			return false;
+		}
 		if (stdNo != other.stdNo)
 			return false;
 		return true;
