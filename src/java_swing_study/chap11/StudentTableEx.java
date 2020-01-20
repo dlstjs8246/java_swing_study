@@ -4,31 +4,32 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.TableColumnModelEvent;
+import javax.swing.event.TableColumnModelListener;
 
 import java_swing_study.chap11.exam.Student;
 
 @SuppressWarnings("serial")
-public class StudentListEx extends JFrame implements ActionListener {
+public class StudentTableEx extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
 	private JPanel pBtns;
-	private JPanel pList;
 	private JPanel pResult;
-	private JScrollPane scrollPane;
-	private JList<Student> list;
 	private JLabel lblNo;
 	private JTextField tfNo;
 	private JLabel lblName;
@@ -40,7 +41,7 @@ public class StudentListEx extends JFrame implements ActionListener {
 	private JLabel lblEng;
 	private JTextField tfEng;
 	private JButton btnAdd;
-	private Vector<Student> stdList;
+	private ArrayList<Student> stdList;
 	private JButton btnCls;
 	/**
 	 * Launch the application.
@@ -49,7 +50,7 @@ public class StudentListEx extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					StudentListEx frame = new StudentListEx();
+					StudentTableEx frame = new StudentTableEx();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,7 +62,7 @@ public class StudentListEx extends JFrame implements ActionListener {
 	/**
 	 * Create the frame.
 	 */
-	public StudentListEx() {
+	public StudentTableEx() {
 		initialize();
 	}
 	private void initialize() {
@@ -110,16 +111,6 @@ public class StudentListEx extends JFrame implements ActionListener {
 		tfEng.setColumns(10);
 		pBtns.add(tfEng);
 		
-		pList = new JPanel();
-		contentPane.add(pList, BorderLayout.CENTER);
-		pList.setLayout(new BorderLayout(0, 0));
-		
-		scrollPane = new JScrollPane();
-		pList.add(scrollPane, BorderLayout.CENTER);
-		
-		list = new JList<>();
-		scrollPane.setViewportView(list);
-		
 		pResult = new JPanel();
 		contentPane.add(pResult, BorderLayout.SOUTH);
 		
@@ -132,10 +123,44 @@ public class StudentListEx extends JFrame implements ActionListener {
 		btnCls.addActionListener(this);
 		btnAdd.addActionListener(myPopMenuLister);
 		
-		stdList = new Vector<Student>();
-		
-		list.setComponentPopupMenu(createPopupMenu());
+		panel = new StudentTblPanel();
+		panel.getTable().getColumnModel().addColumnModelListener(new TableColumnModelListener() {
+			
+			@Override
+			public void columnSelectionChanged(ListSelectionEvent e) {
+				int idx = panel.getTable().getSelectedColumn();
+				getTableLanderer(panel.getTable().getSelectedColumn());
+			}
+			
+			@Override
+			public void columnRemoved(TableColumnModelEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void columnMoved(TableColumnModelEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void columnMarginChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void columnAdded(TableColumnModelEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		panel.setPopupMenu(createPopupMenu());
+		contentPane.add(panel, BorderLayout.CENTER);
 	}
+
 	private JPopupMenu createPopupMenu() {
 		JPopupMenu popMenu = new JPopupMenu();
 		JMenuItem updateItem = new JMenuItem("수정");
@@ -152,45 +177,34 @@ public class StudentListEx extends JFrame implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getActionCommand().equals("추가")) {
-				int idx = list.getSelectedIndex();
-				Student chkStd = getStudent();
-				if(!(stdList.isEmpty()) && stdList.get(idx).equals(chkStd)) {
-					stdList.set(idx, chkStd);
-					list.setListData(stdList);
-				}
-				else {
-					stdList.add(getStudent());
-					list.setListData(stdList);
-					clearTf();
-				}
+				stdList.add(getStudent());
+				panel.loadData(stdList);
+				clearTf();
+			}
+			else if(e.getActionCommand().equals("취소")) {
+				clearTf();
+			}
+			else if(e.getActionCommand().equals("삭제")) {
+				panel.removeRow();
+				getTableLanderer(panel.getTable().getSelectedColumn());
 			}
 			else if(e.getActionCommand().equals("수정")) {
-				int idx = list.getSelectedIndex();
-				if(idx==-1) {
-					JOptionPane.showMessageDialog(null, "선택된 항목이 없습니다");
-					return;
-				}
-				tfNo.setText(stdList.get(idx).getStdNo() + "");
-				tfName.setText(stdList.get(idx).getStdName());
-				tfKor.setText(stdList.get(idx).getKor() + "");
-				tfMath.setText(stdList.get(idx).getMath() + "");
-				tfEng.setText(stdList.get(idx).getEng() + "");			
+				Student std = panel.getSelectedItem();
+				tfNo.setText(std.getStdNo() + " ");
+				tfName.setText(std.getStdName());
+				tfKor.setText(std.getKor() + " ");
+				tfMath.setText(std.getMath()+ " ");
+				tfEng.setText(std.getEng()+ " ");
+				btnAdd.setText("확인");
 			}
-			else {
-				int idx = list.getSelectedIndex();
-				if(idx==-1) {
-					JOptionPane.showMessageDialog(null, "선택된 항목이 없습니다");
-					return;
-				}
-				int confirm = JOptionPane.showConfirmDialog(null, "정말 삭제하시겠습니까?");
-				if(confirm==0) {
-					stdList.remove(idx);
-					list.setListData(stdList);
-				}
+			else if(e.getActionCommand().equals("확인")) {
+				panel.updateRow(getStudent(), getStudent().getStdNo()-1);
+				clearTf();
+				btnAdd.setText("추가");
 			}
 		}
 	};
-	private JButton btnUpdate;
+	private StudentTblPanel panel;
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnCls) {
 			btnClsActionPerformed(e);
@@ -206,9 +220,7 @@ public class StudentListEx extends JFrame implements ActionListener {
 		
 	}
 	public void setStudent() {
-		Student student = getStudent();
-		stdList.set(student.getStdNo()-1, student);
-		list.setListData(stdList);
+
 	}
 	public void clearTf() {
 		tfNo.setText("");
@@ -219,5 +231,11 @@ public class StudentListEx extends JFrame implements ActionListener {
 	}
 	protected void btnClsActionPerformed(ActionEvent e) {
 		clearTf();
+	}
+	private void getTableLanderer(int idx) {
+		idx = panel.getTable().getSelectedColumn();
+		if(idx!=-1) {
+			panel.getTable().getColumnModel().getColumn(idx).setCellRenderer(panel.getTableLanderer());
+		}
 	}
 }

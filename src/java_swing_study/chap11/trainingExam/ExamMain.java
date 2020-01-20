@@ -1,16 +1,16 @@
 package java_swing_study.chap11.trainingExam;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
+@SuppressWarnings("serial")
 public class ExamMain extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
@@ -18,6 +18,7 @@ public class ExamMain extends JFrame implements ActionListener {
 	private JButton btnExam02;
 	private JButton btnExam05;
 	private JButton btnExam07;
+	private JButton btnOpenChallenge;
 
 	/**
 	 * Launch the application.
@@ -64,9 +65,16 @@ public class ExamMain extends JFrame implements ActionListener {
 		btnExam07 = new JButton("Exam07");
 		btnExam07.addActionListener(this);
 		contentPane.add(btnExam07);
+		
+		btnOpenChallenge = new JButton("OpenChallenge");
+		btnOpenChallenge.addActionListener(this);
+		contentPane.add(btnOpenChallenge);
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnOpenChallenge) {
+			btnOpenChallengeActionPerformed(e);
+		}
 		if (e.getSource() == btnExam07) {
 			btnExam07ActionPerformed(e);
 		}
@@ -94,6 +102,10 @@ public class ExamMain extends JFrame implements ActionListener {
 	}
 	protected void btnExam07ActionPerformed(ActionEvent e) {
 		Exam07 frame = new Exam07();
+		frame.setVisible(true);
+	}
+	protected void btnOpenChallengeActionPerformed(ActionEvent e) {
+		OpenChallenge frame = new OpenChallenge();
 		frame.setVisible(true);
 	}
 }
