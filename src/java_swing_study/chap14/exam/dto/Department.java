@@ -33,9 +33,10 @@ public class Department {
 	public void setFloor(int floor) {
 		this.floor = floor;
 	}
+	
 	@Override
 	public String toString() {
-		return String.format("%s", deptNo);
+		return String.format("%2d %2s %2d", deptNo, deptName, floor);
 	}
 	@Override
 	public int hashCode() {
