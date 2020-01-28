@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -38,6 +39,7 @@ public class EmployeeFrame extends JFrame implements ActionListener {
 	private JPanel pAddImg;
 	private JButton btnAddImg;
 	private JPanel pImg;
+	private JLabel lblImg;
 
 	/**
 	 * Launch the application.
@@ -95,7 +97,7 @@ public class EmployeeFrame extends JFrame implements ActionListener {
 		pImg = new JPanel();
 		pNorthImg.add(pImg);
 		
-		JLabel lblImg = new JLabel();
+		lblImg = new JLabel();
 		lblImg.setSize(100, 100);
 		lblImg.setIcon(new ImageIcon(new ImageIcon("D:\\workspace_java\\java_swing_study\\images\\사진추가.png").getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 		pImg.add(lblImg);
@@ -104,6 +106,7 @@ public class EmployeeFrame extends JFrame implements ActionListener {
 		pNorthImg.add(pAddImg);
 		
 		btnAddImg = new JButton("사진 추가");
+		btnAddImg.addActionListener(this);
 		pAddImg.add(btnAddImg);
 		
 		pNorthTable = new EmployeePanel();
@@ -167,6 +170,9 @@ public class EmployeeFrame extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == btnAddImg) {
+			btnAddImgActionPerformed(e);
+		}
 		if (e.getSource() == btnClear) {
 			btnClearActionPerformed(e);
 		}
@@ -190,5 +196,12 @@ public class EmployeeFrame extends JFrame implements ActionListener {
 	}
 	protected void btnClearActionPerformed(ActionEvent e) {
 		pNorthTable.tfClear();
+	}
+	protected void btnAddImgActionPerformed(ActionEvent e) {
+		JFileChooser imgFile = new JFileChooser(System.getProperty("user.dir")+"\\images\\");
+		int req = imgFile.showOpenDialog(this);
+		if(req==JFileChooser.APPROVE_OPTION) {
+			lblImg.setIcon(new ImageIcon(new ImageIcon(imgFile.getSelectedFile().getPath()).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
+		}
 	}
 }
