@@ -92,7 +92,6 @@ public class JdbcConnnetion {
 		try(Connection conn = DriverManager.getConnection(url,user,pass);
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);) {
-			Class.forName("com.mysql.jdbc.Driver");
 			deptArr = new ArrayList<>();
 			while(rs.next()) {
 				int deptNo = rs.getInt("deptno");
@@ -104,10 +103,6 @@ public class JdbcConnnetion {
 			for(Department dept : deptArr) {
 				System.out.println(dept);
 			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.err.println("해당 드라이버를 로드 할 수 없습니다.");
-			e.printStackTrace();
 		} catch (SQLException e) {
 			System.err.println("해당 데이터베이스가 존재하지 않거나 계정 및 비밀번호 확인 요망" + e.getErrorCode());
 			e.printStackTrace();
